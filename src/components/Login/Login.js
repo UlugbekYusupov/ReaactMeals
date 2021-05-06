@@ -350,10 +350,6 @@ export default function Login() {
   const authCtx = useContext(AuthContext)
   const [isLoading, setIsLoading] = useState(false)
 
-  // } else {
-  //   url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDOrGEVcJp7D4lrsrsgv8Y7Ap2wbniHwzw'
-  // }
-
   const submitHandler = (event) => {
     event.preventDefault()
     const enteredEmail = emailInputRef.current.value

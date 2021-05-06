@@ -40,7 +40,7 @@ function Header(props) {
                 <span className={classes.icon}>
                   <ExitToAppRoundedIcon />
                 </span>
-                <Link style={{ color: 'white' }}>Logout</Link>
+                <Link to='/logout' style={{ color: 'white' }}></Link>
               </button>
             )}
             {loginCtx.isLoggedIn && (
@@ -48,7 +48,7 @@ function Header(props) {
                 <span className={classes.icon}>
                   <AccountCircleRoundedIcon />
                 </span>
-                <Link style={{ color: 'white' }} to='/profile'>Profile</Link>
+                <Link to='/profile' style={{ color: 'white' }} to='/profile'></Link>
               </button>
             )}
           </div>

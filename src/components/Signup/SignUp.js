@@ -1,17 +1,8 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
+import React, { useRef, useState } from 'react';
+import { Avatar, CssBaseline, TextField, Grid, Typography, makeStyles, Container } from '@material-ui/core';
 import Button from '../Layout/Button/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 function Copyright() {
   return (
@@ -53,6 +44,75 @@ const useStyles = makeStyles((theme) => ({
 export default function SignUp() {
   const classes = useStyles();
 
+  const firstNameInputRef = useRef()
+  const lastNameInputRef = useRef()
+  const emailInputRef = useRef()
+  const passwordInputRef = useRef()
+  const telNumberInputRef = useRef()
+  const [isLoading, setIsLoading] = useState(false)
+
+  const history = useHistory()
+
+  const submitHandler = (event) => {
+    event.preventDefault()
+
+    const enteredEmail = emailInputRef.current.value
+    const enteredPassword = passwordInputRef.current.value
+    const enteredFirstName = firstNameInputRef.current.value
+    const enteredLastName = lastNameInputRef.current.value
+    const enteredTelNumber = telNumberInputRef.current.value
+
+    setIsLoading(true)
+    let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDOrGEVcJp7D4lrsrsgv8Y7Ap2wbniHwzw'
+    fetch(
+      url,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          email: enteredEmail,
+          password: enteredPassword,
+          returnSecureToken: true
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    ).then(res => {
+      setIsLoading(false)
+      if (res.ok) {
+        return res.json()
+      }
+      else {
+        return res.json().then(data => {
+          let errorMessage = 'Authentication failed'
+          if (data && data.error && data.error.message) {
+            errorMessage = data.error.message
+          }
+          throw new Error(errorMessage)
+        })
+      }
+    }).then(data => {
+      history.goBack()
+      //saving user sign up data into the firebase
+      fetch(
+        'https://food-order-38f3a-default-rtdb.firebaseio.com/users.json',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            email: enteredEmail,
+            firstName: enteredFirstName,
+            lastName: enteredLastName,
+            telNumber: enteredTelNumber
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+    }).catch(err => {
+      alert(err.message)
+    })
+  }
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -63,7 +123,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={submitHandler}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -75,6 +135,7 @@ export default function SignUp() {
                 id="firstName"
                 label="First Name"
                 autoFocus
+                inputRef={firstNameInputRef}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -86,6 +147,7 @@ export default function SignUp() {
                 label="Last Name"
                 name="lastName"
                 autoComplete="lname"
+                inputRef={lastNameInputRef}
               />
             </Grid>
             <Grid item xs={12}>
@@ -97,6 +159,7 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                inputRef={emailInputRef}
               />
             </Grid>
             <Grid item xs={12}>
@@ -108,6 +171,7 @@ export default function SignUp() {
                 label="Telephone"
                 type="number"
                 id="telephone"
+                inputRef={telNumberInputRef}
               />
             </Grid>
             <Grid item xs={12}>
@@ -120,6 +184,7 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                inputRef={passwordInputRef}
               />
             </Grid>
           </Grid>

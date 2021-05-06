@@ -15,7 +15,6 @@ function Cart(props) {
 
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [didSubmit, setDidSubmit] = useState(false)
-    const [isLoggedin, setIsLoggedin] = useState(false)
 
     const cartItemRemoveHandler = id => {
         cartCtx.removeItem(id)
