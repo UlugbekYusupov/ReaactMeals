@@ -34,7 +34,7 @@ function Header(props) {
           {loginCtx.isLoggedIn && (
             <HeaderCartButton onClick={props.onShowCart} />
           )}
-          <div style={{ display:'flex', marginLeft: '100px' }}>
+          <div style={{ display: 'flex', marginLeft: '100px' }}>
             {loginCtx.isLoggedIn && (
               <button className={classes.button} onClick={logoutHandler}>
                 <span className={classes.icon}>
