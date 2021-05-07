@@ -51,20 +51,18 @@ const AvailableMeals = () => {
     }
 
     const mealsList = meals.map(meal =>
-        <MealItem
+        <Card><MealItem
             key={meal.id}
             name={meal.name}
             id={meal.id}
             description={meal.description}
             price={meal.price}
-        />)
+        /></Card>)
     return (
         <section className={classes.meals}>
-            <Card>
-                <ul>
-                    {mealsList}
-                </ul>
-            </Card>
+            <ul>
+                {mealsList}
+            </ul>
         </section>
     )
 }

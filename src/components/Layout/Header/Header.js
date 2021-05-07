@@ -24,6 +24,7 @@ function Header(props) {
       <header className={classes.header}>
         <h1>Reactt Meals</h1>
         <div className={classes.innerDiv}>
+         
           {!loginCtx.isLoggedIn && (
             <button className={classes.button} onClick={loginHandler}>
               <Link to="/login" style={{ color: "white" }}>
@@ -31,6 +32,15 @@ function Header(props) {
               </Link>
             </button>
           )}
+
+          {!loginCtx.isLoggedIn && (
+            <button className={classes.button}>
+              <Link to="/signup" style={{ color: "white" }}>
+                Register
+              </Link>
+            </button>
+          )}
+
           {loginCtx.isLoggedIn && (
             <HeaderCartButton onClick={props.onShowCart} />
           )}
@@ -45,19 +55,16 @@ function Header(props) {
             )}
             {loginCtx.isLoggedIn && (
               <button className={classes.button}>
-                <span className={classes.icon}>
-                  <AccountCircleRoundedIcon />
-                </span>
-                <Link to='/profile' style={{ color: 'white' }} to='/profile'></Link>
+                <Link style={{ color: 'white' }} to='/profile'>Profile</Link>
               </button>
             )}
           </div>
 
         </div>
       </header>
-      {/* <div className={classes["main-image"]}>
+      <div className={classes["main-image"]}>
         <img src={mealsImage} alt="A table full of delicious food" />
-      </div> */}
+      </div>
     </React.Fragment>
   );
 }

@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react';
-import { Avatar, CssBaseline, TextField, Grid, Typography, makeStyles, Container } from '@material-ui/core';
+import React, { useRef, useState, useContext } from 'react';
+import { Avatar,CircularProgress, CssBaseline, TextField, Grid, Typography, makeStyles, Container } from '@material-ui/core';
 import Button from '../Layout/Button/Button';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Link, useHistory } from 'react-router-dom'
+import Modal from '../UI/Modal/Modal'
 
 function Copyright() {
   return (
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 3),
+    margin: theme.spacing(4, 0, 3),
     width: '100%'
   },
 }));
@@ -49,8 +50,8 @@ export default function SignUp() {
   const emailInputRef = useRef()
   const passwordInputRef = useRef()
   const telNumberInputRef = useRef()
-  const [isLoading, setIsLoading] = useState(false)
 
+  const [isLoading, setIsLoading] = useState(false)
   const history = useHistory()
 
   const submitHandler = (event) => {
@@ -99,10 +100,11 @@ export default function SignUp() {
         {
           method: 'POST',
           body: JSON.stringify({
-            email: enteredEmail,
+            email: data.email,
             firstName: enteredFirstName,
             lastName: enteredLastName,
-            telNumber: enteredTelNumber
+            telNumber: enteredTelNumber,
+            token: data.idToken
           }),
           headers: {
             'Content-Type': 'application/json'
@@ -115,13 +117,18 @@ export default function SignUp() {
   }
   return (
     <Container component="main" maxWidth="xs">
+     {isLoading && (
+        <Modal >
+          <CircularProgress color="inherit" />
+        </Modal>
+      )}
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Create Account
         </Typography>
         <form className={classes.form} onSubmit={submitHandler}>
           <Grid container spacing={2}>
@@ -197,18 +204,8 @@ export default function SignUp() {
           >
             Sign Up
           </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link to="/login" variant="body2">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
         </form>
       </div>
-      {/* <Box mt={30}> */}
-      {/* <footer><Copyright /></footer> */}
-      {/* </Box> */}
     </Container>
   );
 }

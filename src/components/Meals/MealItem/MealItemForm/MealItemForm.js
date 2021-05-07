@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
+import AuthContext from '../../../../store/auth-context'
 import Input from '../../../UI/Input/Item-Input'
 import classes from './MealItemForm.module.css'
 
@@ -6,6 +7,7 @@ function MealItemForm(props) {
 
     const amountInputRef = useRef()
     const [amountIsValid, setAmountIsValid] = useState(true)
+    const loginCtx = useContext(AuthContext)
 
     const submitHandlerForm = (event) => {
         event.preventDefault()
@@ -32,7 +34,7 @@ function MealItemForm(props) {
                     step: '1',
                     defaultValue: '1'
                 }} />
-            <button>+ Add</button>
+            <button disabled={!loginCtx.isLoggedIn}>+ Add</button>
             {!amountIsValid && <p>Please enter a vild number (1~5)</p>}
         </form>
     )

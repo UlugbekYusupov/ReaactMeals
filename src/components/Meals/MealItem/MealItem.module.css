@@ -2,8 +2,9 @@
     display: flex;
     justify-content: space-between;
     margin: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #ccc;
+    align-items: center;
+    /* padding-bottom: 1rem; */
+    /* border-bottom: 1px solid #ccc; */
   }
   
   .meal h3 {
@@ -21,9 +22,11 @@
     font-size: 1.25rem;
   }
 
-  .image {
+.image {
     width: 120px;
     height: 120px;
+    cursor: pointer;
     border-radius: 10px;
     background-color: #ad5502;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }

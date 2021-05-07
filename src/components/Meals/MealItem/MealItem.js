@@ -1,3 +1,4 @@
+import { Link } from '@material-ui/core'
 import React, { useContext } from 'react'
 import CartContext from '../../../store/cart-context'
 import classes from './MealItem.module.css'
@@ -19,9 +20,9 @@ function MealItem(props) {
 
     return (
         <li className={classes.meal}>
-            <div style={{display:'flex'}}>
-                <img alt="Meal" className={classes.image} />
-                <div style={{marginLeft:'20px', paddingTop:'8px'}}>
+            <div style={{ display: 'flex' }}>
+                <img className={classes.image} />
+                <div style={{ marginLeft: '20px', paddingTop: '8px' }}>
                     <h3>{props.name}</h3>
                     <div className={classes.description}>{props.description}</div>
                     <div className={classes.price}>{price}</div>
