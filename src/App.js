@@ -28,19 +28,14 @@ function App() {
       <Header onShowCart={showCartHandler} />
       <main>
         <Switch>
-          
           <Route path='/' exact component={Meals} />
-          
           {!loginCtx.token && <Route path='/login' exact component={Login} />}
           {!loginCtx.isLoggedIn && <Route path='/signup' exact component={SignUp} />}
           {loginCtx.token && <Route path='/profile' exact component={Profile} />}
-          
           <Route path='/forgotPassword' exact component={ForgotPassword} />
-          
           <Route path='*'>
             <Redirect to="/" />
           </Route>
-
         </Switch>
       </main>
     </React.Fragment>
