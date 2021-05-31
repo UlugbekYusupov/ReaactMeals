@@ -21,7 +21,7 @@ function MealItem(props) {
     return (
         <li className={classes.meal}>
             <div style={{ display: 'flex' }}>
-                <img className={classes.image} />
+                <img src={props.image} className={classes.image} />
                 <div style={{ marginLeft: '20px', paddingTop: '8px' }}>
                     <h3>{props.name}</h3>
                     <div className={classes.description}>{props.description}</div>

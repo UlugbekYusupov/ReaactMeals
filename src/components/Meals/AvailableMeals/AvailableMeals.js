@@ -4,6 +4,19 @@ import MealItem from '../MealItem/MealItem';
 
 import { useEffect, useState } from 'react'
 
+
+
+import Shashlik from '../../../assets/shashlik.jpeg'
+import Qoturma from '../../../assets/qoturma.jpeg'
+import Palov from '../../../assets/palov.jpeg'
+import Somsa from '../../../assets/somsa.jpeg'
+import Non from '../../../assets/non.jpeg'
+
+export const foodImgs = [
+    Somsa, Palov, Qoturma, Non, Shashlik
+];
+
+
 const AvailableMeals = () => {
 
     const [meals, setMeals] = useState([])
@@ -12,7 +25,7 @@ const AvailableMeals = () => {
 
     useEffect(() => {
         const fetchMeals = async () => {
-            const response = await fetch('https://food-order-38f3a-default-rtdb.firebaseio.com/meals.json')
+            const response = await fetch('https://reactmeals-b0304-default-rtdb.firebaseio.com/meals.json')
             if (!response.ok) {
                 throw new Error("Something went wrong!")
             }
@@ -50,19 +63,24 @@ const AvailableMeals = () => {
         </section>
     }
 
-    const mealsList = meals.map(meal =>
-        <Card><MealItem
+    const mealsList = meals.map((meal, index) =>
+        <MealItem
             key={meal.id}
             name={meal.name}
             id={meal.id}
             description={meal.description}
             price={meal.price}
-        /></Card>)
+            image={foodImgs[index]}
+        />
+    )
+
     return (
         <section className={classes.meals}>
-            <ul>
-                {mealsList}
-            </ul>
+            <Card>
+                <ul>
+                    {mealsList}
+                </ul>
+            </Card>
         </section>
     )
 }
